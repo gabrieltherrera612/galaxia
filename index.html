@@ -6,9 +6,26 @@
   <style>
     body { margin:0; overflow:hidden; background:#000; }
     canvas { display:block; }
+    /* Posicionar controles de audio */
+    #musicPlayer {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(0,0,0,0.5);
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
+<!-- Reproductor de música -->
+<audio id="musicPlayer" controls>
+  <source src="musica1.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio.
+</audio>
+
 <script src="three.min.js"></script>
 <script src="OrbitControls.js"></script>
 <script>
@@ -50,7 +67,7 @@ function createRadialTexture(colorStart, colorEnd){
   return new THREE.CanvasTexture(canvas);
 }
 
-// Crear un halo ancho como halo0
+// Crear halo ancho como halo0
 function createHalo(inner, outer, colorStart, colorEnd, layers=8){
   const group = new THREE.Group();
   for(let i=0;i<layers;i++){
@@ -99,13 +116,13 @@ const haloColors = [
 ];
 
 // Mantener mismo grosor que halo0
-const haloThickness = 0.4; // ancho del anillo
+const haloThickness = 0.4;
 let start = 1.35;
 const halos = [];
 haloColors.forEach((c)=>{
   const h = createExtremeHalo(start, start + haloThickness, c[0], c[1]);
   halos.push(h);
-  start += haloThickness - 0.05; // separación pequeña para no solaparse
+  start += haloThickness - 0.05; 
 });
 scene.add(...halos);
 
